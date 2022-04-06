@@ -2,9 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage () {
+        stage ('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mooneshbmsit/shared-hello-world.git']]])
+                git credentialsId: 'mooneshbmsit-git', url: 'https://github.com/mooneshbmsit/shared-hello-world.git', branch: 'main'
+            }
+        }
+        stage ('Build image') {
+            steps {
+                sh 'docker build -t moon:l1 .'
             }
         }
     }
