@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        registry = "mooneshbmsit/my-app"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+
     stages {
         stage ('checkout') {
             steps {
@@ -9,8 +15,20 @@ pipeline {
         }
         stage ('Build image') {
             steps {
-                sh 'docker build -t moon:l1 .'
+                script {
+                    dockerImage = docker.build registry
+                }
             }
         }
+        stage ('Push image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        
     }
 }
