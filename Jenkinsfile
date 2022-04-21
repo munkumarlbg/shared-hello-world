@@ -35,7 +35,7 @@ pipeline {
             }
         }
         stage ('Pull nxinx image') {
-            stpes {
+            steps {
                 script {
                     docker.withRegistry( '', registryCredential ) {
                         dokcerImage.pull
@@ -44,7 +44,7 @@ pipeline {
             }
         }
         stage ('Deploy chart') {
-            stpes {
+            steps {
                 script {
                     sh "helm upgrade nginx-server"
                 }
