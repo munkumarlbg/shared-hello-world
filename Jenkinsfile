@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         } 
-        stage ('checkout') {
+        stage ('checkout_helm_chart') {
             steps {
                 git credentialsId: 'mooneshbmsit-git', url: 'https://github.com/mooneshbmsit/dummy_nginx_helm.git', branch: 'main'
             }
